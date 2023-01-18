@@ -1,0 +1,16 @@
+q2:
+pip list 
+
+q3:
+select count(*) from public.green where date(lpep_pickup_datetime) = '2019-01-15' and date(lpep_dropoff_datetime) = '2019-01-15';
+
+q4:
+select date(lpep_pickup_datetime) from public.green where trip_distance = (select max(trip_distance) from public.green);
+
+q5:
+select passenger_count , count(passenger_count) from public.green where date(lpep_pickup_datetime) = '2019-01-01' 
+group by passenger_count having passenger_count = 2 or passenger_count = 3;
+
+q6:
+with table_1 as (select dolocationid,tip_amount from public.green where pulocationid = (select locationid from zone where zone = 'Astoria')) 
+select zone, tip_amount from table_1 left join zone on dolocationid = locationid where tip_amount = (select max(tip_amount) from table_1);
